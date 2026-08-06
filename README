@@ -1,0 +1,92 @@
+"Любая сложная задача имеет простое и заведомо неверное решение."
+Парафраз из великих.
+
+XMLgen - The simplest? XML generator, MIT (c) 2026 miktim@mail.ru
+
+The jar ./dist/xmlgen-... file was generated with debugging info using JDK1.8 for target JRE1.7
+
+package org.miktim.xmlgen;
+
+class XML extends Node;
+  Constructor:
+    XML();
+      - returns empty root node.
+  Methods:
+    @Overriden
+    String toString();
+      - returns XML text with declaration: <?xml version="1.0" encoding="UTF-8"?>.
+
+class Node;
+    Node is XML element node.
+  Constructors:
+    Node();
+      - returns "null" node. Doesn't generate anything.
+    Node(String tag);
+      - the tag is the node name with a prefix, if present;
+      - let me remind you that there should be no spaces in names;
+      - tag can contain attributes.
+        For example:
+          new Node("prop xmlns:R=\"http://ns.example.com/schema/\"");
+          new Node("R:author", "John Doe").
+    Node(String tag, Object content);
+      - the content of the String type are escaped;
+      - the content can be null. Generates <tag/>
+  Methods:
+    Node setNode(Node node);
+      - adds node to the current node;
+      - returns node.
+    Node addNode(Node node);
+      - adds node to the current node;
+      - returns current node.
+    Node setNode(String tag);
+      - adds new node to the current node;
+      - returns new node.
+    Node addNode(String tag);
+      - adds new node to the current node;
+      - returns current node.
+    Node setNode(String tag, Object content);
+      - adds new node to the current node;
+      - returns new node.
+    Node addNode(String tag, Object content);
+      - adds new node to the current node;
+      - returns current node.
+    
+    boolean isEmpty();
+      - checks if the node (xml) is empty.
+    static String escape(String value);
+      - escapes "<", ">", "&".
+    @Overriden
+    String toString();
+      - returns XML text as a single line.
+
+Example:
+
+  XML xml = new XML();
+  xml.setNode("multistatus xmlns=\"DAV:\"")
+    .setNode("response")
+    .addNode("href", "http://www.example.com/container/")
+    .setNode("propstat")
+    .addNode("status", "HTTP/1.1 200 OK")
+    .setNode("prop xmlns:R=\"http://ns.example.com/schema/\"")
+    .addNode("R:author", "John Doe")
+    .addNode("creationdate", "2026-06-12T23:20:50.52Z")
+    .addNode("displayname", "container")
+    .addNode("supportedlock", null);
+
+xml.toString() returns following XML text (actually as single line):
+
+<?xml version="1.0" encoding="utf-8" ?>
+<multistatus xmlns="DAV:">
+  <response>
+    <href>http://www.example.com/container/</href>
+    <propstat>
+      <status>HTTP/1.1 200 OK</status>
+      <prop xmlns:R="http://ns.example.com/schema/">
+        <R:author>John Doe</R:author>
+        <creationdate>2026-06-12T23:20:50.52Z</creationdate>
+        <displayname>container</displayname>
+        <supportedlock/>
+      </prop>
+    </propstat>
+  </response>
+</multistatus>

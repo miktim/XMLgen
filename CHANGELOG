@@ -1,0 +1,6 @@
+1.1.1
+  - fixed: checks if the Node argument is null;
+  - fixed: adding a node to the root or the "null" node;
+  - Node: method isEmpty() added.
+1.1.0
+  - Node: set... add... methods added.
