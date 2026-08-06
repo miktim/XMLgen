@@ -12,7 +12,6 @@ class XML extends Node;
     XML();
       - returns empty root node.
   Methods:
-    @Overriden
     String toString();
       - returns XML text with declaration: <?xml version="1.0" encoding="UTF-8"?>.
 
@@ -55,7 +54,6 @@ class Node;
       - checks if the node (xml) is empty.
     static String escape(String value);
       - escapes "<", ">", "&".
-    @Overriden
     String toString();
       - returns XML text as a single line.
 
