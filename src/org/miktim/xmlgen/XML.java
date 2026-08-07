@@ -3,6 +3,9 @@
  */
 package org.miktim.xmlgen;
 
+import static java.lang.String.format;
+import java.nio.charset.Charset;
+
 public class XML extends Node {
 
     public XML() {
@@ -10,7 +13,7 @@ public class XML extends Node {
 
     @Override
     public String toString() {
-        return "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n"
+        return format("<?xml version=\"1.0\" encoding=\"%s\" ?>\n", Charset.defaultCharset())
                 + super.toString();
     }
 }
