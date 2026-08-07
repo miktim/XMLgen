@@ -1,5 +1,8 @@
 /*
+ * XMLgen Test, MIT (c) 2026 miktim@mail.ru
  */
+
+package xmlgen;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

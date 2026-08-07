@@ -1,3 +1,5 @@
+1.1.2
+  - Node: tag syntax checking added
 1.1.1
   - fixed: checks if the Node argument is null;
   - fixed: adding a node to the root or the "null" node;

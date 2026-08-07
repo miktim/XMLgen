@@ -16,9 +16,7 @@ public class Node {
 
     public Node(String tag) {
         tag = tag.trim();
-        if (tag.isEmpty()) {
-            throw new IllegalArgumentException("nodeName");
-        }
+        checkTag(tag);
         nodeName = tag;
     }
 
@@ -37,6 +35,14 @@ public class Node {
     }
     private boolean hasName() {
         return nodeName != null;
+    }
+
+    static void checkTag(String tag) {
+// rough syntax check
+        String namePattern = "([_\\p{L}][._\\p{L}0-9]*)(:([_\\p{L}][._\\p{L}0-9]*))*";
+        String tagPattern = format("^%s(\\s+%1$s=\"[^\"]*\")*$",namePattern);
+        if(tag.matches(tagPattern)) return;
+        throw new IllegalArgumentException("tag: " + tag);
     }
     
     public Node setNode(Node node) {

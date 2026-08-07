@@ -1,4 +1,4 @@
-"Любая сложная задача имеет простое и заведомо неверное решение."
+"Любая задача имеет простое и заведомо неверное решение."
 Парафраз из великих.
 
 XMLgen - The simplest? XML generator, MIT (c) 2026 miktim@mail.ru
@@ -21,9 +21,8 @@ class Node;
     Node();
       - returns "null" node. Doesn't generate anything.
     Node(String tag);
-      - the tag is the node name with a prefix, if present;
-      - let me remind you that there should be no spaces in names;
-      - tag can contain attributes.
+      - the tag is a node name with an optional prefix and optional attributes;
+      - let me remind you that there should be no spaces in names.
         For example:
           new Node("prop xmlns:R=\"http://ns.example.com/schema/\"");
           new Node("R:author", "John Doe").
