@@ -36,6 +36,7 @@ public class XML extends Node {
                 = (getDeclaration(charset) + super.toString()).getBytes(charset);
         out.write(bytes);
         out.flush();
+        out.close();
     }
 
     private String getDeclaration(String charset) {

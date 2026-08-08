@@ -20,15 +20,16 @@ class XML extends Node;
       - the regex xml names pattern.
   Methods:
     String toString();
-      - returns XML text encoded in the DEFAULT JVM charset.
+      - returns XML text encoded in the JVM's DEFAULT charset.
     String toString(String charset) throws UnsupportedEncodingException;
-      - returns XML text encoded in specified charset
+      - returns XML text encoded in the specified charset
     void toStream(OutputStream out) throws IOException;
-      - writes XML encoded in the DEFAULT JVM charset to output stream;
-      - the output stream remains open.
+      - writes XML text, encoded in the JVM's DEFAULT charset,
+        to the output stream and closes stream.
     void toStream(OutputStream out, String charset) throws IOException;
-      - writes XML encoded in specified charset to output stream;
-      - the output stream remains open.
+      - writes XML text, encoded in the specified charset,
+        to the output stream and closes stream.
+
   Note:
     In Java 17 and earlier, the default charset was dynamic;
     it was determined at startup based on the user's operating system,
