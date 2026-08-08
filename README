@@ -53,7 +53,7 @@ class Node;
           new Node("IsReadOnly xmlns=\"http://ucb.openoffice.org/dav/props/\"",false);
           new Node("R:author", "John Doe").
 
-    Methods throws:
+    Constructors throws:
       NullPointerException: when the tag is null;
       IllegalArgumentException: when the tag is empty or syntactically incorrect.
 
