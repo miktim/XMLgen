@@ -1,5 +1,9 @@
+1.2.0
+  - Node: fixed add, set "null" node
+  - XML: toStream methods added
+  - XML: toString(String charset) method added
 1.1.3
-  - XML: XML declaration with Java default charset
+  - XML: toString() XML encoding within the JVM default charset
 1.1.2
   - Node: tag syntax checking added
 1.1.1

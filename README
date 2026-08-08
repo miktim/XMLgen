@@ -1,34 +1,61 @@
 "Любая задача имеет простое и заведомо неверное решение."
-Парафраз из великих.
+Парафраз из кого-то.
 
-XMLgen - The simplest? XML generator, MIT (c) 2026 miktim@mail.ru
+Полагаю, что версия 1.2 функционально полна для заявленной цели:
+создать простейший генератор XML.
 
-The jar ./dist/xmlgen-... file was generated with debugging info using JDK1.8 for target JRE1.7
+XMLgen - The simplest XML generator, MIT (c) 2026 miktim@mail.ru
+
+The jar ./dist/xmlgen-... file was generated with debugging info
+using JDK1.8 for target JRE1.7
 
 package org.miktim.xmlgen;
 
 class XML extends Node;
   Constructor:
     XML();
-      - returns empty root node.
+      - returns an empty XML.
+  Constant:
+    String NAME_PATTERN;
+      - the regex xml names pattern.
   Methods:
     String toString();
-      - returns XML text with declaration: <?xml version="1.0" encoding="UTF-8"?>.
+      - returns XML text encoded in the DEFAULT JVM charset.
+    String toString(String charset) throws UnsupportedEncodingException;
+      - returns XML text encoded in specified charset
+    void toStream(OutputStream out) throws IOException;
+      - writes XML encoded in the DEFAULT JVM charset to output stream;
+      - the output stream remains open.
+    void toStream(OutputStream out, String charset) throws IOException;
+      - writes XML encoded in specified charset to output stream;
+      - the output stream remains open.
+  Note:
+    In Java 17 and earlier, the default charset was dynamic;
+    it was determined at startup based on the user's operating system,
+    locale, and regional settings (e.g., windows-1252 on Western Windows).
 
 class Node;
-    Node is XML element node.
+  Node is XML element node.
+
   Constructors:
     Node();
       - returns "null" node. Doesn't generate anything.
     Node(String tag);
       - the tag is a node name with an optional prefix and optional attributes;
       - let me remind you that there should be no spaces in names.
-        For example:
+        Example:
           new Node("prop xmlns:R=\"http://ns.example.com/schema/\"");
-          new Node("R:author", "John Doe").
     Node(String tag, Object content);
       - the content of the String type are escaped;
-      - the content can be null. Generates <tag/>
+      - the content can be null.
+        Examples:
+          new Node("IsReadOnly xmlns=\"http://ucb.openoffice.org/dav/props/\"",false);
+          new Node("R:author", "John Doe").
+
+    Throws:
+      NullPointerException: when the tag is null;
+      IllegalArgumentException: when the tag is empty or syntactically incorrect.
+
   Methods:
     Node setNode(Node node);
       - adds node to the current node;
@@ -48,7 +75,11 @@ class Node;
     Node addNode(String tag, Object content);
       - adds new node to the current node;
       - returns current node.
-    
+
+  Note:
+    The node added to an empty XML becomes the root (current) node.
+    In other words, addNode works as a setNode in this case.   
+
     boolean isEmpty();
       - checks if the node (xml) is empty.
     static String escape(String value);
@@ -68,7 +99,7 @@ Example:
     .addNode("R:author", "John Doe")
     .addNode("creationdate", "2026-06-12T23:20:50.52Z")
     .addNode("displayname", "container")
-    .addNode("supportedlock", null);
+    .addNode("supportedlock");
 
 xml.toString() returns following XML text (actually as single line):
 

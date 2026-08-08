@@ -26,6 +26,7 @@ public class Node {
             return;
         }
         if (content instanceof String) {
+            if(((String) content).isEmpty()) return;
             content = escape((String) content);
         }
         nodeList.add(String.valueOf(content));
@@ -37,23 +38,24 @@ public class Node {
         return nodeName != null;
     }
 
-    static void checkTag(String tag) {
+    private static void checkTag(String tag) {
 // rough syntax check
-        String namePattern = "([_\\p{L}][._\\p{L}0-9]*)(:([_\\p{L}][._\\p{L}0-9]*))*";
-        String tagPattern = format("^%s(\\s+%1$s=\"[^\"]*\")*$",namePattern);
+        String tagPattern = format("^%s(\\s+%1$s=\"[^\"]*\")*$",XML.NAME_PATTERN);
         if(tag.matches(tagPattern)) return;
         throw new IllegalArgumentException("tag: " + tag);
     }
     
     public Node setNode(Node node) {
         if(node == null) throw new NullPointerException("node");
-        nodeList.add(node);
-        return node;
+        if(node.hasName()) nodeList.add(node);
+        return node.hasName() ? node : this;
     }
     public Node addNode(Node node) {
         if(node == null) throw new NullPointerException("node");
-        nodeList.add(node);
-        return hasName() ? this : node;
+        if(node.hasName()){ nodeList.add(node);
+            return hasName() ? this : node;
+        }
+        return this;
     }
     public Node setNode(String tag) {
         Node node = new Node(tag);
@@ -82,17 +84,19 @@ public class Node {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Object node : nodeList) {
-            sb.append(node.toString());
-        }
+        String endTag = "";
         if (hasName()) { // root?
             if (nodeList.isEmpty()) {
                 sb.append(format("<%s/>", nodeName));
             } else {
-                sb.insert(0, format("<%s>", escape(nodeName)));
-                sb.insert(sb.length(), format("</%s>", nodeName.split(" ", 2)[0]));
+                sb.append(format("<%s>", escape(nodeName)));
+                endTag = format("</%s>", nodeName.split(" ", 2)[0]);
             }
         }
+        for (Object node : nodeList) {
+            sb.append(node.toString());
+        }
+        sb.append(endTag);
         return sb.toString();
     }
 }
