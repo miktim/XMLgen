@@ -16,7 +16,7 @@ class XML extends Node;
     XML();
       - returns an empty XML.
   Constant:
-    String NAME_PATTERN;
+    statc String NAME_PATTERN;
       - the regex xml names pattern.
   Methods:
     String toString();
@@ -52,7 +52,7 @@ class Node;
           new Node("IsReadOnly xmlns=\"http://ucb.openoffice.org/dav/props/\"",false);
           new Node("R:author", "John Doe").
 
-    Throws:
+    Methods throws:
       NullPointerException: when the tag is null;
       IllegalArgumentException: when the tag is empty or syntactically incorrect.
 
