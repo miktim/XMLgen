@@ -57,7 +57,17 @@ public class TestXMLgen {
     }
 
     public static void main(String[] args) throws Exception {
-        XML xml = new XML();
+        XML xml = new XML(new Node("Root", "content"));
+        xml.addNode("Child");
+        log(xml);
+        xml = new XML(new Node("Root"));
+        xml.setNode("Child", "content")
+                .setNode("Child");
+        xml.setNode("Child");
+        log(xml);
+        checkXml(xml.toString(),false);
+        log("Ok");
+        xml = new XML();
         xml.setNode("multistatus xmlns=\"DAV:\"")
                 .setNode("response")
                 .addNode("href", "http://www.example.com/container/")
@@ -73,7 +83,7 @@ public class TestXMLgen {
         log("Ok");//CRLF
         xml = new XML();
 //        checkXml(xml.toString(), false); // SAXParseException on empty xml
-        xml.addNode("ТекстовыйУзел xmlns:префикс=\"DAV:\"", "текст")
+        xml.setNode("ТекстовыйУзел xmlns:префикс=\"DAV:\"", "текст")
                 .addNode("префикс:ДочернийУзел");
         log(xml);
         checkXml(xml.toString(), false);
@@ -98,7 +108,7 @@ public class TestXMLgen {
         xml.addNode(new Node()) // "null" node as root node
                 .setNode(new Node());
         if (xml.isEmpty()) { // check xml with "null" nodes
-            xml.addNode("Text.Node", "text")
+            xml.setNode("Text.Node", "text")
                     .addNode("Child.Node");
         }
         log(xml);
@@ -108,7 +118,7 @@ public class TestXMLgen {
         xml = new XML();
         Node node = new Node("TextNode", "text");
         node.addNode(new Node("ChildTextNode", "child text"));
-        xml.addNode(node); // add node to the empty XML
+        xml.setNode(node); // set node to the empty XML
         log(xml);
         checkXml(xml.toString(), false);
         log("Ok");
@@ -117,7 +127,7 @@ public class TestXMLgen {
         node = new Node("ParentNode");
         node.addNode(new Node()) // "null" node between nodes
                 .addNode("ChildNode");
-        xml.addNode(node);
+        xml.setNode(node);
         log(xml);
         checkXml(xml.toString(), false);
         log("Ok");

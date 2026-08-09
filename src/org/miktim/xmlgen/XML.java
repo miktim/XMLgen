@@ -13,6 +13,12 @@ public class XML extends Node {
 
     public XML() {
     }
+    public XML(Node rootNode) {
+//        this.setNode(rootNode);
+        super(rootNode.nodeName);
+        nodeList = rootNode.nodeList;
+    }
+
     public static final String NAME_PATTERN
             = "([_\\p{L}][._\\p{L}0-9]*)(:([_\\p{L}][._\\p{L}0-9]*))*";
 
