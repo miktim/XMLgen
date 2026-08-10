@@ -13,7 +13,9 @@ class XML extends Node;
     XML();
       - creates an empty XML.
     XML(Node rootNode);
-      - creates an XML with the root node.
+      - creates an XML with the root node;
+      - avoid recursion!
+
   Constant:
     statc String NAME_PATTERN;
       - the regex XML names pattern: xml_name[:xml_name]
@@ -61,9 +63,11 @@ class Node;
   Methods:
     Node setNode(Node node);
       - adds the node to the parent Node;
+      - avoid recursion!;
       - sets the node as the parent.
     Node addNode(Node node);
       - adds the node to the parent Node.
+      - avoid recursion!
     Node setNode(String tag);
       - adds new node to the parent Node;
       - sets new node as the parent.
@@ -77,7 +81,7 @@ class Node;
 
     Throws:
       NullPointerException: when argument Node is null;
-      NoSuchElementException: when trying addNode to an empty XML. 
+      NoSuchElementException: when trying addNode to an empty XML or empty "null" node. 
 
     boolean isEmpty();
       - checks if the node (xml) is empty.

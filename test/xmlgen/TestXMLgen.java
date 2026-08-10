@@ -27,6 +27,7 @@ public class TestXMLgen {
     static void checkXml(String xml, boolean show) throws IOException, ParserConfigurationException, SAXException {
         checkXml(new ByteArrayInputStream(xml.getBytes()), show);
     }
+
     static void checkXml(InputStream in, boolean show) throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         factory.setNamespaceAware(true);
@@ -65,7 +66,7 @@ public class TestXMLgen {
                 .setNode("Child");
         xml.setNode("Child");
         log(xml);
-        checkXml(xml.toString(),false);
+        checkXml(xml.toString(), false);
         log("Ok");
         xml = new XML();
         xml.setNode("multistatus xmlns=\"DAV:\"")
@@ -88,7 +89,7 @@ public class TestXMLgen {
         log(xml);
         checkXml(xml.toString(), false);
         log("Ok");
-        
+
         String encoding = "windows-1251";
         log(xml.toString(encoding));
         checkXml(xml.toString(encoding), false); // not work
@@ -96,27 +97,25 @@ public class TestXMLgen {
         FileOutputStream fos = new FileOutputStream(file);
         xml.toStream(new FileOutputStream(file), encoding);
         fos.close();
-        if(xml.toString(encoding).length() != file.length()) {
+        if (xml.toString(encoding).length() != file.length()) {
             throw new Exception("Length mismatch");
         }
         FileInputStream fis = new FileInputStream(file);
-        checkXml(fis,false);
+        checkXml(fis, false);
         file.delete();
         log("Ok");
-        
+
         xml = new XML();
-        xml.addNode(new Node()) // "null" node as root node
+        Node node = xml.addNode(new Node()) // "null" node as root node
                 .setNode(new Node());
-        if (xml.isEmpty()) { // check xml with "null" nodes
-            xml.setNode("Text.Node", "text")
-                    .addNode("Child.Node");
-        }
+        node.setNode("Text.Node", "text")
+                .addNode("Child.Node");
         log(xml);
         checkXml(xml.toString("utf-8"), false);
         log("Ok");
 
         xml = new XML();
-        Node node = new Node("TextNode", "text");
+        node = new Node("TextNode", "text");
         node.addNode(new Node("ChildTextNode", "child text"));
         xml.setNode(node); // set node to the empty XML
         log(xml);

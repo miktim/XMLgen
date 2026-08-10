@@ -14,8 +14,8 @@ public class XML extends Node {
     public XML() {
     }
     public XML(Node rootNode) {
-//        this.setNode(rootNode);
-        super(rootNode.nodeName);
+//        super(rootNode.nodeName);
+        nodeName = rootNode.nodeName;
         nodeList = rootNode.nodeList;
     }
 

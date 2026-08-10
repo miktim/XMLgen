@@ -56,9 +56,8 @@ public class Node {
         if (node == null) {
             throw new NullPointerException("node");
         }
-        if (node.hasName()) {
-            nodeList.add(node);
-        }
+        node = dereferenceXml(node);
+        nodeList.add(node);
         return node.hasName() ? node : this;
     }
 
@@ -69,10 +68,18 @@ public class Node {
         if (!hasName() && node.hasName()) {
             throw new NoSuchElementException("Orphan. No parent");
         }
-        if (node.hasName()) {
-            nodeList.add(node);
-        }
+        node = dereferenceXml(node);
+        nodeList.add(node);
         return this;
+    }
+
+    static Node dereferenceXml(Node node) {
+        if (node instanceof XML) {
+            Node newNode = new Node(node.nodeName);
+            newNode.nodeList = node.nodeList;
+            return newNode;
+        }
+        return node;
     }
 
     public Node setNode(String tag) {
