@@ -5,20 +5,20 @@ package org.miktim.xmlgen;
 
 import static java.lang.String.format;
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 
 public class Node {
 
-    String nodeName = null;
+    String nodeTag = null;
     ArrayList<Object> nodeList = new ArrayList<>(); // not Thread-safe
 
-    public Node() {
+    protected Node() {
+        
     }
 
     public Node(String tag) {
         tag = tag.trim();
         checkTag(tag);
-        nodeName = tag;
+        nodeTag = tag;
     }
 
     public Node(String tag, Object content) {
@@ -35,14 +35,6 @@ public class Node {
         nodeList.add(String.valueOf(content));
     }
 
-    public boolean isEmpty() {
-        return nodeList.isEmpty();
-    }
-
-    boolean hasName() {
-        return nodeName != null;
-    }
-
     private static void checkTag(String tag) {
 // rough syntax check
         String tagPattern = format("^%s(\\s+%1$s=\"[^\"]*\")*$", XML.NAME_PATTERN);
@@ -52,21 +44,18 @@ public class Node {
         throw new IllegalArgumentException("tag: " + tag);
     }
 
-    public Node setNode(Node node) {
+    public final Node setNode(Node node) {
         if (node == null) {
             throw new NullPointerException("node");
         }
         node = dereferenceXml(node);
         nodeList.add(node);
-        return node.hasName() ? node : this;
+        return node;
     }
 
     public Node addNode(Node node) {
         if (node == null) {
             throw new NullPointerException("node");
-        }
-        if (!hasName() && node.hasName()) {
-            throw new NoSuchElementException("Orphan. No parent");
         }
         node = dereferenceXml(node);
         nodeList.add(node);
@@ -75,7 +64,7 @@ public class Node {
 
     static Node dereferenceXml(Node node) {
         if (node instanceof XML) {
-            Node newNode = new Node(node.nodeName);
+            Node newNode = new Node(node.nodeTag);
             newNode.nodeList = node.nodeList;
             return newNode;
         }
@@ -113,14 +102,14 @@ public class Node {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         String endTag = "";
-        if (hasName()) { // root?
+//        if (hasTag()) { // root?
             if (nodeList.isEmpty()) {
-                sb.append(format("<%s/>", nodeName));
+                sb.append(format("<%s/>", nodeTag));
             } else {
-                sb.append(format("<%s>", escape(nodeName)));
-                endTag = format("</%s>", nodeName.split(" ", 2)[0]);
+                sb.append(format("<%s>", escape(nodeTag)));
+                endTag = format("</%s>", nodeTag.split(" ", 2)[0]);
             }
-        }
+//        }
         for (Object node : nodeList) {
             sb.append(node.toString());
         }

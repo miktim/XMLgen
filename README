@@ -10,8 +10,6 @@ package org.miktim.xmlgen;
 
 class XML extends Node;
   Constructor:
-    XML();
-      - creates an empty XML.
     XML(Node rootNode);
       - creates an XML with the root node;
       - avoid recursion!
@@ -40,8 +38,6 @@ class Node;
   Node is XML element node.
 
   Constructors:
-    Node();
-      - creates a "null" node. It's a ghost.
     Node(String tag);
       - creates a node;
       - the tag is a node name with an optional prefix and optional attributes;
@@ -49,7 +45,8 @@ class Node;
         Example:
           new Node("prop xmlns:R=\"http://ns.example.com/schema/\"");
     Node(String tag, Object content);
-      - creates a node with content;
+      - creates a node with content ("text" node);
+      - converts the content into its String representation;
       - escapes the text (String instance) content;
       - the content can be null.
         Examples:
@@ -80,11 +77,8 @@ class Node;
       - adds new node to the parent Node;
 
     Throws:
-      NullPointerException: when argument Node is null;
-      NoSuchElementException: when trying addNode to an empty XML or empty "null" node. 
+      NullPointerException: when argument Node is null.
 
-    boolean isEmpty();
-      - checks if the node (xml) is empty.
     static String escape(String value);
       - escapes "<", ">", "&".
     String toString();
@@ -92,17 +86,16 @@ class Node;
 
 Example:
 
-  XML xml = new XML();
-  xml.setNode("multistatus xmlns=\"DAV:\"")
-       .setNode("response")
-         .addNode("href", "http://www.example.com/container/")
-         .setNode("propstat")
-           .addNode("status", "HTTP/1.1 200 OK")
-           .setNode("prop xmlns:R=\"http://ns.example.com/schema/\"")
-             .addNode("R:author", "John Doe")
-             .addNode("creationdate", "2026-06-12T23:20:50.52Z")
-             .addNode("displayname", "container")
-             .addNode("supportedlock");
+XML xml = new XML(new Node("multistatus xmlns=\"DAV:\""));
+xml.setNode("response")
+     .addNode("href", "http://www.example.com/container/")
+     .setNode("propstat")
+       .addNode("status", "HTTP/1.1 200 OK")
+       .setNode("prop xmlns:R=\"http://ns.example.com/schema/\"")
+         .addNode("R:author", "John Doe")
+         .addNode("creationdate", "2026-06-12T23:20:50.52Z")
+         .addNode("displayname", "container")
+         .addNode("supportedlock");
 
 xml.toString() returns following XML text (actually as single line):
 

@@ -11,11 +11,8 @@ import java.nio.charset.Charset;
 
 public class XML extends Node {
 
-    public XML() {
-    }
     public XML(Node rootNode) {
-//        super(rootNode.nodeName);
-        nodeName = rootNode.nodeName;
+        nodeTag = rootNode.nodeTag;
         nodeList = rootNode.nodeList;
     }
 
