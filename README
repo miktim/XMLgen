@@ -16,7 +16,7 @@ class XML extends Node;
 
   Constant:
     statc String NAME_PATTERN;
-      - the regex XML names pattern: xml_name[:xml_name]
+      - the regex XML names pattern: [prefix:]name
   Methods:
     String toString();
       - returns XML text encoded in the JVM's DEFAULT charset.
@@ -41,13 +41,13 @@ class Node;
     Node(String tag);
       - creates a node;
       - the tag is a node name with an optional prefix and optional attributes;
-      - the tag syntax is checked.
+      - checks the tag syntax.
         Example:
           new Node("prop xmlns:R=\"http://ns.example.com/schema/\"");
     Node(String tag, Object content);
       - creates a node with content ("text" node);
-      - converts the content into its String representation;
       - escapes the text (String instance) content;
+      - converts the content object into its String representation;
       - the content can be null.
         Examples:
           new Node("R:author", "John Doe");
@@ -59,25 +59,28 @@ class Node;
 
   Methods:
     Node setNode(Node node);
-      - adds the node to the parent Node;
+      - adds the node to the this (parent) Node;
       - avoid recursion!;
-      - sets the node as the parent.
+      - returns node (new parent node).
     Node addNode(Node node);
-      - adds the node to the parent Node.
+      - adds the node to the this (parent) Node.
       - avoid recursion!
+      - returns this (current parent node).
     Node setNode(String tag);
       - adds new node to the parent Node;
-      - sets new node as the parent.
+      - returns new node.
     Node addNode(String tag);
       - adds new node to the parent Node;
+      - returns this.
     Node setNode(String tag, Object content);
       - adds new node to the parent Node;
-      - sets new node as the parent.
+      - returns new node.
     Node addNode(String tag, Object content);
       - adds new node to the parent Node;
+      - returns this.
 
     Throws:
-      NullPointerException: when argument Node is null.
+      NullPointerException: when argument node is null.
 
     static String escape(String value);
       - escapes "<", ">", "&".
