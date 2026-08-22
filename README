@@ -44,7 +44,7 @@ class Node;
         Example:
           new Node("prop xmlns:R=\"http://ns.example.com/schema/\"");
     Node(String tag, Object content);
-      - creates a node with content ("text" node);
+      - creates a text node;
       - escapes the text (String instance) content;
       - converts the content object into its String representation;
       - the content can be null.
