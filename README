@@ -11,8 +11,7 @@ package org.miktim.xmlgen;
 class XML extends Node;
   Constructor:
     XML(Node rootNode);
-      - creates an XML with the root node;
-      - avoid recursion!
+      - creates an XML with the root node.
 
   Constant:
     statc String NAME_PATTERN;
