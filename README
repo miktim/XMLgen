@@ -79,7 +79,8 @@ class Node;
       - returns this.
 
     Throws:
-      NullPointerException: when argument node is null.
+      NullPointerException: when argument node or the tag is null;
+      IllegalArgumentException: when the tag is empty or syntactically incorrect.
 
     static String escape(String value);
       - escapes "<", ">", "&".
@@ -99,7 +100,7 @@ xml.setNode("response")
          .addNode("displayname", "container")
          .addNode("supportedlock");
 
-xml.toString() returns following XML text (actually as single line):
+xml.toString() returns following XML text (actually as a single line):
 
 <?xml version="1.0" encoding="utf-8" ?>
 <multistatus xmlns="DAV:">

@@ -12,7 +12,7 @@ public class Node {
     ArrayList<Object> nodeList = new ArrayList<>(); // not Thread-safe
 
     protected Node() {
-        
+
     }
 
     public Node(String tag) {
@@ -35,10 +35,12 @@ public class Node {
         nodeList.add(String.valueOf(content));
     }
 
+    static String TAG_PATTERN
+            = format("^%s(\\s+%1$s=\"[^\"]*\")*$", XML.NAME_PATTERN);
+
     private static void checkTag(String tag) {
 // rough syntax check
-        String tagPattern = format("^%s(\\s+%1$s=\"[^\"]*\")*$", XML.NAME_PATTERN);
-        if (tag.matches(tagPattern)) {
+        if (tag.matches(TAG_PATTERN)) {
             return;
         }
         throw new IllegalArgumentException("tag: " + tag);
@@ -102,14 +104,12 @@ public class Node {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         String endTag = "";
-//        if (hasTag()) { // root?
-            if (nodeList.isEmpty()) {
-                sb.append(format("<%s/>", nodeTag));
-            } else {
-                sb.append(format("<%s>", escape(nodeTag)));
-                endTag = format("</%s>", nodeTag.split(" ", 2)[0]);
-            }
-//        }
+        if (nodeList.isEmpty()) {
+            sb.append(format("<%s/>", nodeTag));
+        } else {
+            sb.append(format("<%s>", escape(nodeTag)));
+            endTag = format("</%s>", nodeTag.split(" ", 2)[0]);
+        }
         for (Object node : nodeList) {
             sb.append(node.toString());
         }
