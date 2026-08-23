@@ -93,9 +93,9 @@ public class Node {
 
     public static String escape(String value) {
         return value
+                .replaceAll("&", "&amp;")
                 .replaceAll("<", "&lt;")
-                .replaceAll(">", "&gt;")
-                .replaceAll("&", "&amp;");
+                .replaceAll(">", "&gt;");
     }
 
     @Override
