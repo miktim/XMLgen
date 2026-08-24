@@ -73,7 +73,7 @@ public class TestXMLgen {
                 .addNode("href", "http://www.example.com/container/")
                 .setNode("propstat")
                 .addNode("status", "HTTP/1.1 200 OK")
-                .setNode("prop xmlns:R=\"http://ns.example.com/schema/\"")
+                .setNode(Node.tag("prop", "xmlns:R", "http://ns.example.com/schema/"))
                 .addNode("R:author", "John Doe")
                 .addNode("creationdate", "2026-06-12T23:20:50.52Z")
                 .addNode("displayname", "container")
