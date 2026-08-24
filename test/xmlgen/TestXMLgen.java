@@ -81,9 +81,8 @@ public class TestXMLgen {
         log(xml + "\r\n");
         checkXml(xml.toString(), true);
         log("Ok");//CRLF
-        xml = new XML(new Node("ТекстовыйУзел xmlns:префикс=\"DAV:\"", "текст"));
-//        checkXml(xml.toString(), false); // SAXParseException on empty xml
-        xml.addNode("префикс:ДочернийУзел");
+        xml = new XML(new Node("ТекстовыйУзел xmlns:префикс='DAV:' attr=\"value\" ", "текст"));
+        xml.addNode("префикс:ДочернийУзел","текст");
         log(xml);
         checkXml(xml.toString(), false);
         log("Ok");

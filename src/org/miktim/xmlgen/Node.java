@@ -16,9 +16,7 @@ public class Node {
     }
 
     public Node(String tag) {
-        tag = tag.trim();
-        checkTag(tag);
-        nodeTag = tag;
+        nodeTag = checkTag(tag.trim());
     }
 
     public Node(String tag, Object content) {
@@ -36,12 +34,12 @@ public class Node {
     }
 
     static String TAG_PATTERN
-            = format("^%s(\\s+%1$s=\"[^\"]*\")*$", XML.NAME_PATTERN);
+            = format("^%s(\\s+%1$s=((\"[^\"]*\")|('[^']*')))*$", XML.NAME_PATTERN);
 
-    private static void checkTag(String tag) {
+    private static String checkTag(String tag) {
 // rough syntax check
         if (tag.matches(TAG_PATTERN)) {
-            return;
+            return tag;
         }
         throw new IllegalArgumentException("tag: " + tag);
     }
@@ -92,7 +90,16 @@ public class Node {
         Node node = new Node(tag, content);
         return setNode(node);
     }
-
+    
+    public static String tag(String tagName, String... attr) {
+        String tag = checkTag(tagName);
+        for(int i = 0; i < attr.length; i++) {
+            tag += format(" %s=\"%s\"",
+                    attr[i], escape(attr[++i]).replaceAll("\"", "&quote;"));
+        }
+        return checkTag(tag);
+    }
+    
     public static String escape(String value) {
         return value
                 .replaceAll("&", "&amp;")
