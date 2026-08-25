@@ -14,7 +14,7 @@ class XML extends Node;
       - creates an XML with the root node.
 
   Constant:
-    statc String NAME_PATTERN;
+    static String NAME_PATTERN;
       - the regex XML names pattern: [prefix:]name
   Methods:
     String toString();
@@ -45,7 +45,7 @@ class Node;
           new Node("prop xmlns:R=\"http://ns.example.com/schema/\"");
     Node(String tag, Object content);
       - creates a text node;
-      - escapes the text (String instance) content;
+      - escapes ("<", ">", "&") the text (String instance) content;
       - converts the content object into its String representation;
       - the content can be null.
         Examples:
