@@ -1,7 +1,6 @@
 XMLgen - The simplest XML generator, MIT (c) 2026 miktim@mail.ru
 
-There are enough advanced XML generators. 
-This is an attempt to implement the simplest one.
+This is an attempt to implement the simplest XML generator.
 
 The jar ./dist/xmlgen-... file was generated with debugging info
 using JDK1.8 for target JRE1.7
@@ -58,11 +57,11 @@ class Node;
 
   Methods:
     Node setNode(Node node);
-      - adds the node to the this (parent) Node;
+      - adds the node to the this (current parent) Node;
       - avoid recursion!;
       - returns node (new parent node).
     Node addNode(Node node);
-      - adds the node to the this (parent) Node.
+      - adds the node to the this (current parent) Node.
       - avoid recursion!
       - returns this (current parent node).
     Node setNode(String tag);
