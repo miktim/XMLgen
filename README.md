@@ -29,5 +29,4 @@ The xml.toString() method returns the following XML text (actually as a single s
   </response>
 </multistatus>
 ```  
-Package help: [./README.txt](./README.txt)  
-The latest version of the package is here: [./dist](./dist)  
+Package help here: [./README.txt](./README.txt)
