@@ -10,7 +10,7 @@ package org.miktim.xmlgen;
 class XML extends Node;
   Constructor:
     XML(Node rootNode);
-      - creates an XML with the root node.
+      Creates an XML with the root node.
 
   Constant:
     static String NAME_PATTERN;
@@ -37,13 +37,14 @@ class Node;
 
   Constructors:
     Node(String tag);
-      - creates a node;
+      Creates a node.
       - the tag is a node name with an optional prefix and optional attributes;
+      - use the Node.tag method to escape attribute values;
       - checks the tag syntax.
         Example:
           new Node("prop xmlns:R=\"http://ns.example.com/schema/\"");
     Node(String tag, Object content);
-      - creates a text node;
+      Creates a text node.
       - escapes ("<", ">", "&") the text (String instance) content;
       - converts the content object into its String representation;
       - the content can be null.
@@ -62,7 +63,7 @@ class Node;
       - returns node (new parent node).
     Node addNode(Node node);
       - adds the node to the this (current parent) Node.
-      - avoid recursion!
+      - avoid recursion!;
       - returns this (current parent node).
     Node setNode(String tag);
       - adds new node to the parent Node;
