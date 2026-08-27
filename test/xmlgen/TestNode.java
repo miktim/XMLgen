@@ -65,6 +65,9 @@ public class TestNode {
         node.setNode("child",new Node("number",12));
         expected = "<node>text<child><number>12</number></child></node>";
         testNode(node, expected);
-        log(Node.tag("tagName", "attr1", "value1", "attr2", "value2"));
+
+        node = new Node(Node.tag("node", "attr","<&>'\""),"<&>'\"");
+        expected = "<node attr=\"&lt;&amp;&gt;'&quot;\">&lt;&amp;&gt;'\"</node>";
+        testNode(node,expected);
     }
 }

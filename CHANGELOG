@@ -1,3 +1,5 @@
+2.1.1
+  - fixed: Node tag escaping
 2.1.0
   - Node: tag "constructor" added;
   - fixed: the tag check pattern

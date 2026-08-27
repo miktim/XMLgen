@@ -90,16 +90,16 @@ public class Node {
         Node node = new Node(tag, content);
         return setNode(node);
     }
-    
+
     public static String tag(String tagName, String... attr) {
         String tag = checkTag(tagName);
-        for(int i = 0; i < attr.length; i++) {
+        for (int i = 0; i < attr.length; i++) {
             tag += format(" %s=\"%s\"",
-                    attr[i], escape(attr[++i]).replaceAll("\"", "&quote;"));
+                    attr[i], escape(attr[++i]).replaceAll("\"", "&quot;"));
         }
         return checkTag(tag);
     }
-    
+
     public static String escape(String value) {
         return value
                 .replaceAll("&", "&amp;")
@@ -114,7 +114,7 @@ public class Node {
         if (nodeList.isEmpty()) {
             sb.append(format("<%s/>", nodeTag));
         } else {
-            sb.append(format("<%s>", escape(nodeTag)));
+            sb.append(format("<%s>", nodeTag));
             endTag = format("</%s>", nodeTag.split(" ", 2)[0]);
         }
         for (Object node : nodeList) {

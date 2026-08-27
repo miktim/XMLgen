@@ -119,5 +119,10 @@ public class TestXMLgen {
         log(xml);
         checkXml(xml.toString(), false);
         log("Ok");
+
+        xml = new XML(new Node(Node.tag("node", "attr", "&<>\"'"),"&<>\"'"));
+        log(xml);
+        checkXml(xml.toString(), false);
+        log("Ok");
     }
 }
