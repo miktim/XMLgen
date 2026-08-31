@@ -36,27 +36,39 @@ class Node;
   Node is XML element node.
 
   Constructors:
-    Node(String tag);
+    Node(String nodeName);
       Creates a node.
-      - the tag is a node name with an optional prefix and optional attributes;
-      - use the Node.tag method to escape attribute values;
-      - checks the tag syntax.
+      - checks the tagName syntax.
         Example:
           new Node("prop xmlns:R=\"http://ns.example.com/schema/\"");
-    Node(String tag, Object content);
+    Node(String nodeName, Object content);
       Creates a text node.
       - escapes ("<", ">", "&") the text (String instance) content;
       - converts the content object into its String representation;
       - the content can be null.
         Examples:
           new Node("R:author", "John Doe");
-          new Node("IsReadOnly xmlns=\"http://ucb.openoffice.org/dav/props/\"",false);
+          new Node("IsReadOnly", false);
 
     Throws:
       NullPointerException: when the tag is null;
       IllegalArgumentException: when the tag is empty or syntactically incorrect.
 
   Methods:
+    Node addAttr(String attrName, String value)
+      Adds an attribute to the node tag.
+      - the attribute values will be escaped ("\"","<",">","&")
+        and enclosed in double quotes;
+      - returns this.
+    Node addAttr(String... attrs);
+      Adds attributes to the node tag.
+      - attrs are attribute name-value pairs;
+      - returns this. 
+    Throws: 
+      NullPointerException: when the name or value is null;
+      IllegalArgumentException: when the name is empty or syntactically incorrect.
+      ArrayIndexOutOfBoundsException: when the name-value pair is incomplete.
+
     Node setNode(Node node);
       - adds the node to the this (current parent) Node;
       - avoid recursion!;
@@ -65,33 +77,21 @@ class Node;
       - adds the node to the this (current parent) Node.
       - avoid recursion!;
       - returns this (current parent node).
-    Node setNode(String tag);
+    Node setNode(String nodeName);
       - adds new node to the parent Node;
       - returns new node.
-    Node addNode(String tag);
+    Node addNode(String nodeName);
       - adds new node to the parent Node;
       - returns this.
-    Node setNode(String tag, Object content);
-      - adds new node to the parent Node;
+    Node setNode(String nodeName, Object content);
+      - adds new text node to the parent Node;
       - returns new node.
-    Node addNode(String tag, Object content);
-      - adds new node to the parent Node;
+    Node addNode(String nodeName, Object content);
+      - adds new text node to the parent Node;
       - returns this.
-
     Throws:
-      NullPointerException: when the node or tag argument is null;
-      IllegalArgumentException: when the tag is empty or syntactically incorrect.
-
-    static String tag(String tagName, String... attrs);
-      The tag "constructor".
-      - attrs are attribute name-value pairs;
-      - the attribute values will be escaped ("\"","<",">","&")
-        and enclosed in double quotes;
-      - returns the checked tag. 
-      Throws: 
-        ArrayIndexOutOfBoundsException: when the name-value pair is incomplete.
-        NullPointerException: when the name or value is null;
-        IllegalArgumentException: when the tag is empty or syntactically incorrect.
+      NullPointerException: when the node or node name argument is null;
+      IllegalArgumentException: when the node name is empty or syntactically incorrect.
       
     static String escape(String value);
       - escapes "<", ">", "&".
@@ -100,12 +100,13 @@ class Node;
 
 Example:
 
-XML xml = new XML(new Node("multistatus xmlns=\"DAV:\""));
+XML xml = new XML((new Node("multistatus)).addAttr("xmlns","DAV:"));
 xml.setNode("response")
      .addNode("href", "http://www.example.com/container/")
      .setNode("propstat")
        .addNode("status", "HTTP/1.1 200 OK")
-       .setNode(Node.tag("prop", "xmlns:R", "http://ns.example.com/schema/"))
+       .setNode((new Node("prop"))
+            .addAttr("xmlns:R", "http://ns.example.com/schema/"))
          .addNode("R:author", "John Doe")
          .addNode("creationdate", "2026-06-12T23:20:50.52Z")
          .addNode("displayname", "container")

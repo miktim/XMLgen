@@ -15,12 +15,12 @@ public class Node {
 
     }
 
-    public Node(String tag) {
-        nodeTag = checkTag(tag.trim());
+    public Node(String nodeName) {
+        this.nodeTag = checkName(nodeName.trim());
     }
 
-    public Node(String tag, Object content) {
-        this(tag);
+    public Node(String nodeName, Object content) {
+        this(nodeName);
         if (content == null) {
             return;
         }
@@ -31,17 +31,6 @@ public class Node {
             content = escape((String) content);
         }
         nodeList.add(String.valueOf(content));
-    }
-
-    static String TAG_PATTERN
-            = format("^%s(\\s+%1$s=((\"[^\"]*\")|('[^']*')))*$", XML.NAME_PATTERN);
-
-    private static String checkTag(String tag) {
-// rough syntax check
-        if (tag.matches(TAG_PATTERN)) {
-            return tag;
-        }
-        throw new IllegalArgumentException("tag: " + tag);
     }
 
     public final Node setNode(Node node) {
@@ -70,34 +59,53 @@ public class Node {
         }
         return node;
     }
-
-    public Node setNode(String tag) {
-        Node node = new Node(tag);
-        return setNode(node);
-    }
-
-    public Node addNode(String tag) {
-        Node node = new Node(tag);
-        return addNode(node);
-    }
-
-    public Node addNode(String tag, Object content) {
-        Node node = new Node(tag, content);
-        return addNode(node);
-    }
-
-    public Node setNode(String tag, Object content) {
-        Node node = new Node(tag, content);
-        return setNode(node);
-    }
-
-    public static String tag(String tagName, String... attr) {
-        String tag = checkTag(tagName);
-        for (int i = 0; i < attr.length; i++) {
-            tag += format(" %s=\"%s\"",
-                    attr[i], escape(attr[++i]).replaceAll("\"", "&quot;"));
+    
+    private static String checkName(String name) {
+        if (name.matches(XML.NAME_PATTERN)) {
+            return name;
         }
-        return checkTag(tag);
+        throw new IllegalArgumentException("illegal name: " + name);
+    }
+    
+    public Node addAttr(String attrName, String value) {
+            nodeTag += format(" %s=\"%s\"",
+                    checkAttr(attrName.trim()),
+                    escape(value).replaceAll("\"", "&quot;"));
+        return this;
+    }
+    
+    public Node addAttr(String... attrs) {
+        for (int i = 0; i < attrs.length; i++) {
+            addAttr(attrs[i], attrs[++i]);
+        }
+        return this;
+    }
+
+    private String checkAttr(String attrName) {
+        attrName = checkName(attrName);
+        if(!nodeTag.matches(format(" %s=", attrName)))
+            return attrName;
+        throw new IllegalArgumentException("duplicate attr: " + attrName);
+    }
+
+    public Node setNode(String nodeName) {
+        Node node = new Node(nodeName);
+        return setNode(node);
+    }
+
+    public Node addNode(String nodeName) {
+        Node node = new Node(nodeName);
+        return addNode(node);
+    }
+
+    public Node addNode(String nodeName, Object content) {
+        Node node = new Node(nodeName, content);
+        return addNode(node);
+    }
+
+    public Node setNode(String nodeName, Object content) {
+        Node node = new Node(nodeName, content);
+        return setNode(node);
     }
 
     public static String escape(String value) {

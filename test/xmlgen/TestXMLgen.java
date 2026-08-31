@@ -68,12 +68,13 @@ public class TestXMLgen {
         log(xml);
         checkXml(xml.toString(), false);
         log("Ok");
-        xml = new XML(new Node("multistatus xmlns=\"DAV:\""));
+        xml = new XML((new Node("multistatus")).addAttr("xmlns","DAV:"));
         xml.setNode("response")
                 .addNode("href", "http://www.example.com/container/")
                 .setNode("propstat")
                 .addNode("status", "HTTP/1.1 200 OK")
-                .setNode(Node.tag("prop", "xmlns:R", "http://ns.example.com/schema/"))
+                .setNode((new Node("prop"))
+                        .addAttr("xmlns:R", "http://ns.example.com/schema/"))
                 .addNode("R:author", "John Doe")
                 .addNode("creationdate", "2026-06-12T23:20:50.52Z")
                 .addNode("displayname", "container")
@@ -81,7 +82,8 @@ public class TestXMLgen {
         log(xml + "\r\n");
         checkXml(xml.toString(), true);
         log("Ok");//CRLF
-        xml = new XML(new Node("ТекстовыйУзел xmlns:префикс='DAV:' attr=\"value\" ", "текст"));
+        xml = new XML((new Node("ТекстовыйУзел", "текст"))
+                .addAttr("xmlns:префикс","DAV:", "attr","value\" "));
         xml.addNode("префикс:ДочернийУзел","текст");
         log(xml);
         checkXml(xml.toString(), false);
@@ -120,7 +122,7 @@ public class TestXMLgen {
         checkXml(xml.toString(), false);
         log("Ok");
 
-        xml = new XML(new Node(Node.tag("node", "attr", "&<>\"'"),"&<>\"'"));
+        xml = new XML((new Node("node","&<>\"'")).addAttr("attr", "&<>\"'"));
         log(xml);
         checkXml(xml.toString(), false);
         log("Ok");
