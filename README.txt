@@ -51,8 +51,8 @@ class Node;
           new Node("IsReadOnly", false);
 
     Throws:
-      NullPointerException: when the tag is null;
-      IllegalArgumentException: when the tag is empty or syntactically incorrect.
+      NullPointerException: when the node name is null;
+      IllegalArgumentException: when the node name is empty or syntactically incorrect.
 
   Methods:
     Node addAttr(String attrName, String value)
