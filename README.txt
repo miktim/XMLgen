@@ -38,9 +38,9 @@ class Node;
   Constructors:
     Node(String nodeName);
       Creates a node.
-      - checks the tagName syntax.
+      - checks the nodeName syntax.
         Example:
-          new Node("prop xmlns:R=\"http://ns.example.com/schema/\"");
+          new Node("prop");
     Node(String nodeName, Object content);
       Creates a text node.
       - escapes ("<", ">", "&") the text (String instance) content;
@@ -66,7 +66,7 @@ class Node;
       - returns this. 
     Throws: 
       NullPointerException: when the name or value is null;
-      IllegalArgumentException: when the name is empty or syntactically incorrect.
+      IllegalArgumentException: when the name is duplicated or syntactically incorrect.
       ArrayIndexOutOfBoundsException: when the name-value pair is incomplete.
 
     Node setNode(Node node);
