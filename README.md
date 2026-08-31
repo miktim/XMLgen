@@ -1,7 +1,7 @@
 
 Look First:  
 java-xmlbuilder: [https://github.com/jmurty/java-xmlbuilder](https://github.com/jmurty/java-xmlbuilder)  
-xemble: [https://github.com/yegor256/xembly](https://github.com/yegor256/xembly)  
+xembly: [https://github.com/yegor256/xembly](https://github.com/yegor256/xembly)  
 simpleXml: [https://github.com/codemonstur/simplexml](https://github.com/codemonstur/simplexml)  
 
 XMLgen Usage (Java):
