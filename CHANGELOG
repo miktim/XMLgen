@@ -1,3 +1,5 @@
+3.2.0
+  - Node: addComment method added
 3.1.1
   - fixed: checking for duplicate attribute names
   - Node: CDATA method added

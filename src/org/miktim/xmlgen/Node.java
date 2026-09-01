@@ -117,6 +117,18 @@ public class Node {
         return setNode(node);
     }
 
+    public Node addComment(String comment) {
+        if(comment.contains("--") || comment.endsWith("-"))
+            throw new IllegalArgumentException("illegal comment");
+        nodeList.add(format("<!-- %s -->",comment));
+        return this;
+    }
+/*    
+    public Node addDoctype(String doctype) {
+        nodeList.add(format("<!DOCTYPE %s>",doctype));
+        return this;
+    }
+*/
     public static String escape(String value) {
         return value
                 .replaceAll("&", "&amp;")

@@ -89,6 +89,12 @@ class Node;
     Node addNode(String nodeName, Object content);
       - adds new text node to the parent Node;
       - returns this.
+
+    Node addComment(String comment)
+      - adds a comment node;
+      - comment is a text between "<!-- " and " -->"
+      - returns this;
+
     Throws:
       NullPointerException: when the node or node name argument is null;
       IllegalArgumentException: when the node name is empty or syntactically incorrect.
@@ -96,6 +102,8 @@ class Node;
     static String CDATA(Object content);
       - converts the content object into its String representation
         and creates CDATA section
+      - the string value of the content arg is not checked;
+      - you must manually replace "]]>" with "<![CDATA[]]]><![CDATA[>]>", if any.
 
     String toString();
       - returns XML text as a single line.
