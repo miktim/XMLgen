@@ -69,5 +69,12 @@ public class TestNode {
         node = (new Node("node", "<&>'\"")).addAttr("attr","<&>'\"");
         expected = "<node attr=\"&lt;&amp;&gt;'&quot;\">&lt;&amp;&gt;'\"</node>";
         testNode(node,expected);
+
+        try {
+            node = (new Node("node")).addAttr("attr","value","attr","value");
+            logErr(node + "\r\nFailed!");
+        } catch (Exception e) {
+            log(e + "\r\nOk");
+        }
     }
 }

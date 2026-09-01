@@ -28,9 +28,18 @@ public class Node {
             if (((String) content).isEmpty()) {
                 return;
             }
-            content = escape((String) content);
+            if(!isCDATA((String)content))
+                content = escape((String) content);
         }
         nodeList.add(String.valueOf(content));
+    }
+
+    public static String CDATA(Object content) {
+        return format("<![CDATA[%s]]>", String.valueOf(content));
+    }
+
+    private boolean isCDATA(String content) {
+        return content.startsWith("<![CDATA[") && content.endsWith("]]>");
     }
 
     public final Node setNode(Node node) {
@@ -83,7 +92,7 @@ public class Node {
 
     private String checkAttr(String attrName) {
         attrName = checkName(attrName);
-        if(!nodeTag.matches(format(" %s=", attrName)))
+        if(!nodeTag.contains(format(" %s=", attrName)))
             return attrName;
         throw new IllegalArgumentException("duplicate attr: " + attrName);
     }

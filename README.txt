@@ -93,8 +93,10 @@ class Node;
       NullPointerException: when the node or node name argument is null;
       IllegalArgumentException: when the node name is empty or syntactically incorrect.
       
-    static String escape(String value);
-      - escapes "<", ">", "&".
+    static String CDATA(Object content);
+      - converts the content object into its String representation
+        and creates CDATA section
+
     String toString();
       - returns XML text as a single line.
 
@@ -102,7 +104,7 @@ Example:
 
 XML xml = new XML((new Node("multistatus)).addAttr("xmlns","DAV:"));
 xml.setNode("response")
-     .addNode("href", "http://www.example.com/container/")
+     .addNode("href", Node.CDATA("http://www.example.com/container/"))
      .setNode("propstat")
        .addNode("status", "HTTP/1.1 200 OK")
        .setNode((new Node("prop"))
@@ -117,7 +119,7 @@ xml.toString() returns following XML text (actually as a single line):
 <?xml version="1.0" encoding="utf-8" ?>
 <multistatus xmlns="DAV:">
   <response>
-    <href>http://www.example.com/container/</href>
+    <href><![CDATA[http://www.example.com/container/]]></href>
     <propstat>
       <status>HTTP/1.1 200 OK</status>
       <prop xmlns:R="http://ns.example.com/schema/">

@@ -1,4 +1,6 @@
 
+This is an attempt to implement the simplest XML generator.  
+
 Look First:  
 java-xmlbuilder: [https://github.com/jmurty/java-xmlbuilder](https://github.com/jmurty/java-xmlbuilder)  
 xembly: [https://github.com/yegor256/xembly](https://github.com/yegor256/xembly)  
@@ -8,7 +10,7 @@ XMLgen Usage (Java):
 ```java
 XML xml = new XML((new Node("multistatus")).addAttr("xmlns","DAV:"));
 xml.setNode("response")
-     .addNode("href", "http://www.example.com/container/")
+     .addNode("href", Node.CDATA("http://www.example.com/container/"))
      .setNode("propstat")
        .addNode("status", "HTTP/1.1 200 OK")
        .setNode((new Node("prop"))
@@ -23,7 +25,7 @@ The xml.toString() method returns the following XML text (actually as a single s
 <?xml version="1.0" encoding="utf-8" ?>
 <multistatus xmlns="DAV:">
   <response>
-    <href>http://www.example.com/container/</href>
+    <href><![CDATA[http://www.example.com/container/]]></href>
     <propstat>
       <status>HTTP/1.1 200 OK</status>
       <prop xmlns:R="http://ns.example.com/schema/">

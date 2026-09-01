@@ -70,7 +70,7 @@ public class TestXMLgen {
         log("Ok");
         xml = new XML((new Node("multistatus")).addAttr("xmlns","DAV:"));
         xml.setNode("response")
-                .addNode("href", "http://www.example.com/container/")
+                .addNode("href", Node.CDATA("http://www.example.com/container/"))
                 .setNode("propstat")
                 .addNode("status", "HTTP/1.1 200 OK")
                 .setNode((new Node("prop"))
