@@ -17,14 +17,14 @@ class XML extends Node;
       - the regex XML names pattern: [prefix:]name
   Methods:
     String toString();
-      - returns XML text encoded in the JVM's DEFAULT charset.
+      - returns as single line XML text encoded in the JVM's DEFAULT charset.
     String toString(String charset) throws UnsupportedEncodingException;
-      - returns XML text encoded in the specified charset
+      - returns as single line XML text encoded in the specified charset.
     void toStream(OutputStream out) throws IOException;
-      - writes XML text, encoded in the JVM's DEFAULT charset,
+      - writes as single line XML text, encoded in the JVM's DEFAULT charset,
         to the output stream and closes this stream.
     void toStream(OutputStream out, String charset) throws IOException;
-      - writes XML text, encoded in the specified charset,
+      - writes as single line XML text, encoded in the specified charset,
         to the output stream and closes this stream.
 
   Note:
@@ -92,8 +92,8 @@ class Node;
 
     Node addComment(String comment)
       - adds a comment node;
-      - comment is a text between "<!-- " and " -->"
-      - returns this;
+      - comment is a text between "<!-- " and " -->";
+      - returns this.
 
     Throws:
       NullPointerException: when the node or node name argument is null;
@@ -101,7 +101,7 @@ class Node;
       
     static String CDATA(Object content);
       - converts the content object into its String representation
-        and creates CDATA section
+        and creates CDATA section;
       - the string value of the content arg is not checked;
       - you must manually replace "]]>" with "<![CDATA[]]]><![CDATA[>]>", if any.
 
