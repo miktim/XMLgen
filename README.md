@@ -20,7 +20,7 @@ xml.setNode("response")
          .addNode("displayname", "container")
          .addNode("supportedlock");
 ```  
-The xml.toString() method returns the following XML text (actually as a single string):
+The xml.toString() method returns the following XML text (actually as a single line):
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <multistatus xmlns="DAV:">
