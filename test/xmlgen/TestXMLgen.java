@@ -123,9 +123,15 @@ public class TestXMLgen {
         checkXml(xml.toString(), false);
         log("Ok");
 
-        xml = new XML((new Node("node","&<>\"'")).addAttr("attr", "&<>\"'"));
+        xml = new XML((new Node("node","&<>\"'\u0080")).addAttr("attr", "\u0086&<>\"'"));
         log(xml);
         checkXml(xml.toString(), false);
         log("Ok");
+
+        xml = new XML((new Node("node",Node.CDATA(Node.CDATA(new Node("node"))))));
+        log(xml);
+        checkXml(xml.toString(), true);
+        log("Ok");
+       
     }
 }

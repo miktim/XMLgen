@@ -1,24 +1,29 @@
+3.2.1
+  - fixed Node: checking values for illegal chars (0x0-0x8,...,0x7F)
+  - fixed Node.CDATA: escaping "]]>" 
 3.2.0
   - Node: addComment method added
 3.1.1
-  - fixed: checking for duplicate attribute names
+  - fixed Node.addAttr: checking for duplicate attribute names
   - Node: CDATA method added
 3.0.0
-  - Node: refusal to use a tag in constructors;
+  - Node: refusal to use a tag in constructors:
+    this approach creates unnecessary complications;
   - Node: addAttr methods added
 2.1.1
-  - fixed: Node tag escaping
+  - fixed Node: tag escaping
 2.1.0
   - Node: tag "constructor" added;
-  - fixed: the tag check pattern
+  - fixed Node: the tag check pattern
 2.0.1
   - fixed:) escape the escaped
 2.0.0
-  - default constructors are removed (empty XML, "null" Node)
+  - XML,Node: default constructors are removed (empty XML, "null" Node):
+    these constructors create unnecessary complications.
 1.3.2
-  - fixed: using the XML as a node
+  - fixed Node: using the XML as a node
 1.3.1
-  - fixed: an attempt to add node to the empty XML cause exception;
+  - fixed Node: an attempt to add node to the empty XML cause exception;
   - XML: XML(Node) constructor added
 1.2.0
   - Node: fixed add, set "null" node
@@ -29,8 +34,8 @@
 1.1.2
   - Node: tag syntax checking added
 1.1.1
-  - fixed: checks if the Node argument is null;
-  - fixed: adding a node to the root or the "null" node;
+  - fixed Node: checks if the Node argument is null;
+  - fixed Node: adding a node to the root or the "null" node;
   - Node: method isEmpty() added.
 1.1.0
   - Node: set... add... methods added.

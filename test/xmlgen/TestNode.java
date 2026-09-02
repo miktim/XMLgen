@@ -76,5 +76,12 @@ public class TestNode {
         } catch (Exception e) {
             log(e + "\r\nOk");
         }
+
+        try {
+            node = new Node("node","text").addAttr("attr","ab\u007Fcd");
+            logErr(node + "\r\nFailed!");
+        } catch (Exception e) {
+            log(e + "\r\nOk");
+        }
     }
 }

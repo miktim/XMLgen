@@ -31,11 +31,27 @@ public class Node {
             if(!isCDATA((String)content))
                 content = escape((String) content);
         }
-        nodeList.add(String.valueOf(content));
+        nodeList.add(checkChars(String.valueOf(content)));
+    }
+    
+    private static String checkName(String name) {
+        if (name.matches(XML.NAME_PATTERN)) {
+            return name;
+        }
+        throw new IllegalArgumentException("illegal name: " + name);
+    }
+    
+    private static String checkChars(String value) {
+//        if(value.matches(".*[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u0084\u0086-\u009F].*"))
+        if(value.matches(".*[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F].*"))
+            throw new IllegalArgumentException("invalid XML character");
+        return value;
     }
 
     public static String CDATA(Object content) {
-        return format("<![CDATA[%s]]>", String.valueOf(content));
+        return format("<![CDATA[%s]]>", 
+                String.valueOf(content)
+                        .replaceAll("]]>", "<![CDATA[]]]><![CDATA[>]>"));
     }
 
     private boolean isCDATA(String content) {
@@ -69,17 +85,10 @@ public class Node {
         return node;
     }
     
-    private static String checkName(String name) {
-        if (name.matches(XML.NAME_PATTERN)) {
-            return name;
-        }
-        throw new IllegalArgumentException("illegal name: " + name);
-    }
-    
     public Node addAttr(String attrName, String value) {
             nodeTag += format(" %s=\"%s\"",
                     checkAttr(attrName.trim()),
-                    escape(value).replaceAll("\"", "&quot;"));
+                    escape(checkChars(value)).replaceAll("\"", "&quot;"));
         return this;
     }
     
